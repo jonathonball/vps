@@ -15,6 +15,7 @@ Server configuration for my work VPS container
 5. Create virtualenv and enter it
 
     $ virtualenv -p python3 venv/
+
     $ source venv/bin/activate
 
 6. Install dependencies
