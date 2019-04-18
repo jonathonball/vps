@@ -1,9 +1,38 @@
 ---
 # tasks file for bbqlaser.com
 
+# - name: Get application archives
+#   get_url:
+#     url: https://github.com/jonathonball/{{ item.domain }}/archive/master.zip
+#     dest: /root/{{ item.domain }}.zip
+#   with_items: "{{ site_data }}"
+#   tags: web
 
-# - name: Checkout the website
-#   git:
-#     clone: True
-#     repo: git@github.com:jonathonball/bbqlaser.com.git
-#     dest: /usr/share/nginx/html/bbqlaser.com
+# - name: Create web root directories
+#   file:
+#     state: directory
+#     path: /usr/share/nginx/html/{{ item.domain }}
+#     owner: "{{ php_fpm_pool_user }}"
+#     group: "{{ php_fpm_pool_user }}"
+#   with_items: "{{ site_data }}"
+#   tags: web
+
+- name: Extract application
+  unarchive:
+    src: https://github.com/jonathonball/{{ item.domain }}/archive/{{ item.branch }}.zip
+    dest: /usr/share/nginx/html
+    owner: "{{ php_fpm_pool_user }}"
+    group: "{{ php_fpm_pool_group }}"
+    remote_src: True
+    creates: /usr/share/nginx/html/{{ item.domain }}-{{ item.branch }}
+  with_items: "{{ site_data }}"
+  tags: web
+
+- name: Ensure socked is owned
+  file:
+    path: "{{ php_fpm_listen }}"
+    state: file
+    mode: 0660
+    owner: "{{ php_fpm_pool_user }}"
+    group: "{{ php_fpm_pool_group }}"
+  tags: web
