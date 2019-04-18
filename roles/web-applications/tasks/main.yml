@@ -1,0 +1,9 @@
+---
+# tasks file for bbqlaser.com
+
+
+# - name: Checkout the website
+#   git:
+#     clone: True
+#     repo: git@github.com:jonathonball/bbqlaser.com.git
+#     dest: /usr/share/nginx/html/bbqlaser.com
