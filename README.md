@@ -23,5 +23,10 @@ Server configuration for my work VPS container
 
 7. Install playbooks from galaxy
 
-    $ ansible-galaxy install nginxinc.nginx
+    $ ansible-galaxy install geerlingguy.nginx geerlingguy.php
 
+8. Create an inventory file if needed
+
+9. Run ansible
+
+    $ ansible-playbook -i hosts server.yaml

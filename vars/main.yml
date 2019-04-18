@@ -1,5 +1,6 @@
 php_enable_php_fpm: True
 php_fpm_listen: "/run/php-fpm/www.sock"
+php_fpm_pool_user: nginx
 php_packages:
   - php72u
   - php72u-cli
@@ -15,3 +16,35 @@ php_packages:
   - php72u-pecl-apcu
   - php72u-xml
   - php72u-xmlrpc
+php_nginx_location: |
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:{{ php_fpm_listen }};
+        fastcgi_index index.html;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+nginx_vhosts:
+  - listen: "80"
+    server_name: "bbqlaser.com"
+    server_name_redirect: "www.bbqlaser.com"
+    root: "/usr/share/nginx/html"
+    index: "index.html"
+    access_log: "/var/log/nginx/access.log"
+    error_log: "/var/log/nginx/bbqlaser.com.error.log"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    filename: "bbqlaser.com.conf"
+    extra_parameters: "{{ php_nginx_location }}"
+  - listen: "80"
+    server_name: "jonathonball.com"
+    server_name_redirect: "www.jonathonball.com"
+    root: "/usr/share/nginx/html"
+    index: "index.html"
+    access_log: "/var/log/nginx/access.log"
+    error_log: "/var/log/nginx/jonathonball.com.error.log"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    filename: "jonathonball.com.conf"
+    extra_parameters: "{{ php_nginx_location }}"
