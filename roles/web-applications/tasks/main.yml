@@ -1,22 +1,6 @@
 ---
 # tasks file for bbqlaser.com
 
-# - name: Get application archives
-#   get_url:
-#     url: https://github.com/jonathonball/{{ item.domain }}/archive/master.zip
-#     dest: /root/{{ item.domain }}.zip
-#   with_items: "{{ site_data }}"
-#   tags: web
-
-# - name: Create web root directories
-#   file:
-#     state: directory
-#     path: /usr/share/nginx/html/{{ item.domain }}
-#     owner: "{{ php_fpm_pool_user }}"
-#     group: "{{ php_fpm_pool_user }}"
-#   with_items: "{{ site_data }}"
-#   tags: web
-
 - name: Extract application
   unarchive:
     src: https://github.com/jonathonball/{{ item.domain }}/archive/{{ item.branch }}.zip
