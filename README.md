@@ -1,5 +1,5 @@
 # vps
-This configures a centos machine to be a webserver.  It was designed for use in the InMotion Hosting ecosystem.  It prepares the server and deploys two of my websites.
+This configures a centos machine to be a webserver.  It was designed for use on CentOS in the InMotion Hosting ecosystem.  It prepares the server and deploys two of my websites.
 
 ## Initial setup and deployment
 1. Create server in hosting account
