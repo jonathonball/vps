@@ -13,7 +13,7 @@
   notify: restart nginx
   tags: web-application
 
-- name: Ensure socked is owned
+- name: Ensure socked is owned by "{{ php_fpm_pool_user }}"
   file:
     path: "{{ php_fpm_listen }}"
     state: file
