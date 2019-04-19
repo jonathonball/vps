@@ -4,14 +4,19 @@
     delete_bbqlaser: True
     delete_jonathonball: True
   tasks:
-    - name:
+    - name: Get user approval
       pause:
-        prompt: "You are about to delete bbqlaser.com and jonathonball.com.\nCTRL+C to stop.\nPress any key to continue"
+        prompt: "You are about to delete bbqlaser.com\nCTRL+C to stop.\nPress any key to continue"
+      when: delete_bbqlaser == True
     - name: Delete bbqlaser
       file:
         path: /usr/share/nginx/html/bbqlaser.com-master
         state: absent
       when: delete_bbqlaser == True
+    - name: Get user approval
+      pause:
+        prompt: "You are about to delete jonathonball.com.\nCTRL+C to stop.\nPress any key to continue"
+      when: delete_jonathonball == True
     - name: Delete jonathonball
       file:
         path: /usr/share/nginx/html/jonathonball.com-master
