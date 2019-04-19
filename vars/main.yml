@@ -2,6 +2,7 @@ php_enable_php_fpm: True
 php_fpm_listen: "/run/php-fpm/www.sock"
 php_fpm_pool_user: nginx
 php_fpm_pool_group: nginx
+php_webserver_daemon: nginx
 php_packages:
   - php72u-cli
   - php72u-devel
