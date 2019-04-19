@@ -1,5 +1,5 @@
-# vps47709
-Server configuration for my work VPS container
+# vps
+This configures a centos machine to be a webserver.  It was designed for use in the InMotion Hosting ecosystem.  It prepares the server and deploys two of my websites.
 
 ## Initial deployment setup
 1. Create server in hosting account
@@ -26,7 +26,24 @@ $ pip install ansible molecule
 $ ansible-galaxy install geerlingguy.nginx geerlingguy.php
 ```
 8. Create an inventory file if needed
-9. Run ansible
+9. Ensure ansible can reach your machine
+10. Ensure ansible can reach your inventory
+11. Run ansible
 ```
-$ ansible-playbook -i hosts server.yaml
+$ ansible-playbook server.yaml
 ```
+
+## Redeployment
+1. Enter previous virtualenv.
+```
+$ source venv/bin/activate
+```
+2. Ensure ansible can reach your machine
+3. Ensure ansible can reach your inventory
+4. Run redeployment script
+```
+$ chmod u+x redeploy.sh
+$ ./redeploy.sh
+```
+## License
+MIT
