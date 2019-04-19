@@ -10,7 +10,7 @@ $ git clone git@github.com:jonathonball/vps47709.git
 ```
 4. Enter the repository
 ```
-$ cd vps47709/
+$ cd vps/
 ```
 5. Create virtualenv and enter it
 ```
