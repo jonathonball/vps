@@ -1,0 +1,16 @@
+---
+- hosts: all
+  vars:
+    delete_bbqlaser: True
+    delete_jonathonball: True
+  tasks:
+    - name: Delete bbqlaser
+      file:
+        path: /usr/share/nginx/html/bbqlaser.com-master
+        state: absent
+      when: delete_bbqlaser == True
+    - name: Delete jonathonball
+      file:
+        path: /usr/share/nginx/html/jonathonball.com-master
+        state: absent
+      when: delete_jonathonball == True
