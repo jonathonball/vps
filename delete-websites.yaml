@@ -4,6 +4,9 @@
     delete_bbqlaser: True
     delete_jonathonball: True
   tasks:
+    - name:
+      pause:
+        prompt: "You are about to delete bbqlaser.com and jonathonball.com.\nCTRL+C to stop.\nPress any key to continue"
     - name: Delete bbqlaser
       file:
         path: /usr/share/nginx/html/bbqlaser.com-master
