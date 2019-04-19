@@ -10,7 +10,7 @@
     remote_src: True
     creates: /usr/share/nginx/html/{{ item.domain }}-{{ item.branch }}
   with_items: "{{ site_data }}"
-  tags: web
+  tags: web-application
 
 - name: Ensure socked is owned
   file:
@@ -19,4 +19,20 @@
     mode: 0660
     owner: "{{ php_fpm_pool_user }}"
     group: "{{ php_fpm_pool_group }}"
-  tags: web
+  tags: web-application
+
+- name: Allow port 80 in firewalld
+  firewalld:
+    zone: public
+    service: http
+    permanent: yes
+    state: enabled
+  register: firewalld_http
+  tags: web-application
+
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+  when: firewalld_http.changed
+  tags: web-application
