@@ -6,7 +6,7 @@ This configures a centos machine to be a webserver.  It was designed for use on 
 2. Install public key on server
 3. Checkout this repository
 ```
-$ git clone git@github.com:jonathonball/vps47709.git
+$ git clone git@github.com:jonathonball/vps.git
 ```
 4. Enter the repository
 ```
