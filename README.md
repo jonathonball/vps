@@ -19,7 +19,7 @@ $ source venv/bin/activate
 ```
 6. Install dependencies
 ```
-$ pip install ansible molecule
+$ pip install ansible
 ```
 7. Install playbooks from galaxy
 ```
