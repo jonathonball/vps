@@ -1,7 +1,7 @@
 # vps
 This configures a centos machine to be a webserver.  It was designed for use in the InMotion Hosting ecosystem.  It prepares the server and deploys two of my websites.
 
-## Initial deployment setup
+## Initial setup and deployment
 1. Create server in hosting account
 2. Install public key on server
 3. Checkout this repository
