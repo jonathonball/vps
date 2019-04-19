@@ -3,18 +3,12 @@ php_fpm_listen: "/run/php-fpm/www.sock"
 php_fpm_pool_user: nginx
 php_fpm_pool_group: nginx
 php_packages:
-  - php72u
   - php72u-cli
-  - php72u-common
   - php72u-devel
   - php72u-fpm
   - php72u-gd
-  - php72u-imap
-  - php72u-ldap
   - php72u-mbstring
-  - php72u-opcache
   - php72u-pdo
-  - php72u-pecl-apcu
   - php72u-xml
   - php72u-xmlrpc
 php_nginx_location: |
