@@ -25,7 +25,7 @@ nginx_vhosts:
   - listen: "80"
     server_name: "bbqlaser.com"
     server_name_redirect: "www.bbqlaser.com"
-    root: "/usr/share/nginx/html/bbqlaser.com-master"
+    root: "/usr/share/nginx/html/bbqlaser.com-master/src/public"
     index: "index.php"
     access_log: "/var/log/nginx/access.log"
     error_log: "/var/log/nginx/bbqlaser.com.error.log"
