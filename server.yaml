@@ -5,4 +5,5 @@
   roles:
     - geerlingguy.nginx
     - geerlingguy.php
+    - geerlingguy.composer
     - web-applications

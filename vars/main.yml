@@ -12,6 +12,10 @@ php_packages:
   - php72u-pdo
   - php72u-xml
   - php72u-xmlrpc
+  - php72u-opcache
+  - php72u-pecl-apcu
+  - php72u-json
+
 php_nginx_location: |
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
