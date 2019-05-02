@@ -1,2 +1,10 @@
 ---
 # defaults file for app
+
+app_github_tag: master
+app_deploy_path: /usr/share/nginx/html
+app_file_owner: nginx
+app_group_owner: adm
+app_web_root: public
+app_env: 'production'
+app_document_root: ''

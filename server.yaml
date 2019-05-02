@@ -3,7 +3,13 @@
   vars_files:
     - vars/main.yml
   roles:
-    - geerlingguy.nginx
-    - geerlingguy.php
-    - geerlingguy.composer
-    - web-applications
+    - role: geerlingguy.nginx
+    - role: geerlingguy.php
+    - role: geerlingguy.composer
+    - role: app
+      app_github_repo: bbqlaser.com
+      app_document_root: src
+      is_laravel: true
+    - role: app
+      app_github_repo: jonathonball.com
+      is_laravel: false

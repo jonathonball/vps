@@ -1,7 +1,7 @@
 php_enable_php_fpm: True
 php_fpm_listen: "/run/php-fpm/www.sock"
 php_fpm_pool_user: nginx
-php_fpm_pool_group: nginx
+php_fpm_pool_group: adm
 php_webserver_daemon: nginx
 php_packages:
   - php72u-cli
@@ -25,38 +25,4 @@ php_nginx_location: |
         include fastcgi_params;
     }
 
-nginx_vhosts:
-  - listen: "80"
-    server_name: "bbqlaser.com"
-    server_name_redirect: "www.bbqlaser.com"
-    root: "/usr/share/nginx/html/bbqlaser.com-master/src/public"
-    index: "index.php"
-    access_log: "/var/log/nginx/access.log"
-    error_log: "/var/log/nginx/bbqlaser.com.error.log"
-    state: "present"
-    template: "{{ nginx_vhost_template }}"
-    filename: "bbqlaser.com.conf"
-    extra_parameters: "{{ php_nginx_location }}"
-    run_composer: true
-    is_laravel: true
-    environment: "production"
-  - listen: "80"
-    server_name: "jonathonball.com"
-    server_name_redirect: "www.jonathonball.com"
-    root: "/usr/share/nginx/html/jonathonball.com-master"
-    index: "index.php"
-    access_log: "/var/log/nginx/access.log"
-    error_log: "/var/log/nginx/jonathonball.com.error.log"
-    state: "present"
-    template: "{{ nginx_vhost_template }}"
-    filename: "jonathonball.com.conf"
-    extra_parameters: "{{ php_nginx_location }}"
-    run_composer: false
-    is_laravel: false
-    environment: "production"
-
-site_data:
-  - domain: bbqlaser.com
-    branch: master
-  - domain: jonathonball.com
-    branch: master
+app_github_user: jonathonball

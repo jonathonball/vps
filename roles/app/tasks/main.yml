@@ -1,2 +1,54 @@
 ---
 # tasks file for app
+
+- name: Calculate the installation root path
+  set_fact:
+    installation_root: "{{ app_deploy_path }}/{{ app_github_repo }}-{{ app_github_tag }}"
+  tags: app
+
+- name: Calculate the document root path
+  set_fact:
+    document_root: "{{ installation_root }}/{{ app_document_root }}"
+  tags: app
+
+- name: Calculate the web root path
+  set_fact:
+    web_root: "{{ document_root }}/{{ app_web_root }}"
+  tags: app
+
+- name: Extract application
+  unarchive:
+    src: https://github.com/{{ app_github_user }}/{{ app_github_repo }}/archive/{{ app_github_tag }}.zip
+    dest: "{{ app_deploy_path }}"
+    owner: "{{ app_file_owner }}"
+    group: "{{ app_group_owner }}"
+    remote_src: True
+    creates: "{{ installation_root }}"
+  notify: restart nginx
+  tags: app
+
+- name: Ensure socket is owned by "{{ app_file_owner }}:{{ app_group_owner }}"
+  file:
+    path: "{{ php_fpm_listen }}"
+    state: file
+    mode: 0660
+    owner: "{{ app_file_owner }}"
+    group: "{{ app_group_owner }}"
+  notify: restart php-fpm
+  tags: web-application
+
+- name: Run composer for sites that need it
+  composer:
+    command: install
+    working_dir: "{{ document_root }}"
+  when: is_laravel
+  tags: app
+
+- name: Create Laravel environment configurations
+  template:
+    src: laravel.env.j2
+    dest: "{{ document_root }}/.env"
+    owner: "{{ app_file_owner }}"
+    group: "{{ app_group_owner }}"
+  when: is_laravel
+  tags: app

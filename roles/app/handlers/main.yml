@@ -1,2 +1,13 @@
 ---
 # handlers file for app
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  notify: restart php-fpm
+
+- name: restart php-fpm
+  service:
+    name: php-fpm
+    state: restarted
