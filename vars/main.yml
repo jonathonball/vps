@@ -38,6 +38,8 @@ nginx_vhosts:
     filename: "bbqlaser.com.conf"
     extra_parameters: "{{ php_nginx_location }}"
     run_composer: true
+    is_laravel: true
+    environment: "production"
   - listen: "80"
     server_name: "jonathonball.com"
     server_name_redirect: "www.jonathonball.com"
@@ -50,6 +52,8 @@ nginx_vhosts:
     filename: "jonathonball.com.conf"
     extra_parameters: "{{ php_nginx_location }}"
     run_composer: false
+    is_laravel: false
+    environment: "production"
 
 site_data:
   - domain: bbqlaser.com

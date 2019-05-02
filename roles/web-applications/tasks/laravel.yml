@@ -1,0 +1,13 @@
+---
+# Tasks for for laravel specifics
+
+- name: Copy in .env files for Laravel
+  template:
+    src: laravel.env.j2
+    dest: "{{ item.root }}/../.env"
+    owner: "{{ php_fpm_pool_user }}"
+    group: "{{ php_fpm_pool_user }}"
+  with_items: "{{ nginx_vhosts }}"
+  when: item.is_laravel == true
+  register: laravel_env_files
+  tags: web-application

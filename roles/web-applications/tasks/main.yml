@@ -31,6 +31,10 @@
   when: item.run_composer == true
   tags: web-application
 
+- name: Setup Laravel applications
+  include_tasks: laravel.yml
+  tags: web-application
+
 - name: Allow port 80 in firewalld
   firewalld:
     zone: public
