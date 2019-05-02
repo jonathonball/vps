@@ -23,6 +23,14 @@
   notify: restart php-fpm
   tags: web-application
 
+- name: Run composer for sites that need it
+  composer:
+    command: install
+    working_dir: "{{ item.root }}/.."
+  with_items: "{{ nginx_vhosts }}"
+  when: item.run_composer == true
+  tags: web-application
+
 - name: Allow port 80 in firewalld
   firewalld:
     zone: public

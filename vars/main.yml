@@ -37,6 +37,7 @@ nginx_vhosts:
     template: "{{ nginx_vhost_template }}"
     filename: "bbqlaser.com.conf"
     extra_parameters: "{{ php_nginx_location }}"
+    run_composer: true
   - listen: "80"
     server_name: "jonathonball.com"
     server_name_redirect: "www.jonathonball.com"
@@ -48,6 +49,7 @@ nginx_vhosts:
     template: "{{ nginx_vhost_template }}"
     filename: "jonathonball.com.conf"
     extra_parameters: "{{ php_nginx_location }}"
+    run_composer: false
 
 site_data:
   - domain: bbqlaser.com
