@@ -1,7 +1,8 @@
-php_enable_php_fpm: True
-php_fpm_listen: "/run/php-fpm/www.sock"
+php_enable_php_fpm: true
+php_fpm_listen: 127.0.0.1:9000
 php_fpm_pool_user: nginx
 php_fpm_pool_group: adm
+php_use_managed_ini: true
 php_webserver_daemon: nginx
 php_packages:
   - php72u-cli
@@ -19,10 +20,38 @@ php_packages:
 php_nginx_location: |
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:{{ php_fpm_listen }};
+        fastcgi_pass {{ php_fpm_listen }};
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
     }
 
+nginx_vhosts:
+  - listen: "80"
+    server_name: "bbqlaser.com"
+    server_name_redirect: "www.bbqlaser.com"
+    root: "/usr/share/nginx/html/bbqlaser.com-master/src/public"
+    index: "index.php"
+    access_log: "/var/log/nginx/access.log"
+    error_log: "/var/log/nginx/bbqlaser.com.error.log"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    filename: "bbqlaser.com.conf"
+    extra_parameters: "{{ php_nginx_location }}"
+  - listen: "80"
+    server_name: "jonathonball.com"
+    server_name_redirect: "www.jonathonball.com"
+    root: "/usr/share/nginx/html/jonathonball.com-master"
+    index: "index.php"
+    access_log: "/var/log/nginx/access.log"
+    error_log: "/var/log/nginx/jonathonball.com.error.log"
+    state: "present"
+    template: "{{ nginx_vhost_template }}"
+    filename: "jonathonball.com.conf"
+    extra_parameters: "{{ php_nginx_location }}"
+
 app_github_user: jonathonball
+
+firewall_allowed_tcp_ports:
+    - "22"
+    - "80"

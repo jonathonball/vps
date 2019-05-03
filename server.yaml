@@ -13,3 +13,4 @@
     - role: app
       app_github_repo: jonathonball.com
       is_laravel: false
+    - role: geerlingguy.firewall
