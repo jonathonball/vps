@@ -27,18 +27,7 @@
   notify: restart nginx
   tags: app
 
-- name: Run composer for {{ app_github_repo }}
-  composer:
-    command: install
-    working_dir: "{{ document_root }}"
-  when: is_laravel
-  tags: app
-
-- name: Create {{ app_github_repo }} Laravel environment configurations
-  template:
-    src: laravel.env.j2
-    dest: "{{ document_root }}/.env"
-    owner: "{{ app_file_owner }}"
-    group: "{{ app_group_owner }}"
+- name: Setup Laravel application
+  include_tasks: laravel.yml
   when: is_laravel
   tags: app

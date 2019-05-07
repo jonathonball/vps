@@ -8,3 +8,6 @@ app_group_owner: adm
 app_web_root: public
 app_env: 'production'
 app_document_root: ''
+app_force_new_env: false
+app_php_path: /usr/bin/php
+app_https: false
