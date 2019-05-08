@@ -3,10 +3,15 @@
   vars_files:
     - vars/main.yml
   pre_tasks:
-    - name: Disable firewall
+    - name: Check to see if SSL certificate has been generated
+      stat:
+        path: /etc/letsencrypt/live/{{ certbot_certs[0].domains | first }}/cert.pem
+      register: app_ssl_certificate_check
+    - name: Disable firewall for certbot challenges
       service:
         name: firewalld
         state: stopped
+      when: not app_ssl_certificate_check.stat.exists
 
   roles:
     - role: geerlingguy.certbot
