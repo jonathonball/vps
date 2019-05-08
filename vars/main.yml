@@ -1,3 +1,11 @@
+certbot_create_if_missing: true
+certbot_admin_email: jonathonball@cox.net
+certbot_certs:
+  - domains:
+    - bbqlaser.com
+    - jonathonball.com
+certbot_create_standalone_stop_services: []
+
 php_enable_php_fpm: true
 php_fpm_listen: 127.0.0.1:9000
 php_fpm_pool_user: nginx
@@ -18,18 +26,17 @@ php_packages:
   - php72u-json
 
 php_nginx_location: |
-    location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass {{ php_fpm_listen }};
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
+  location ~ \.php$ {
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      fastcgi_pass {{ php_fpm_listen }};
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include fastcgi_params;
+  }
 
 nginx_vhosts:
-  - listen: "80"
+  - listen: "443 ssl http2"
     server_name: "bbqlaser.com"
-    server_name_redirect: "www.bbqlaser.com"
     root: "/usr/share/nginx/html/bbqlaser.com-master/src/public"
     index: "index.php"
     access_log: "/var/log/nginx/access.log"
@@ -37,10 +44,17 @@ nginx_vhosts:
     state: "present"
     template: "{{ nginx_vhost_template }}"
     filename: "bbqlaser.com.conf"
-    extra_parameters: "{{ php_nginx_location }}"
-  - listen: "80"
+    extra_parameters: |
+      {{ php_nginx_location }}
+      ssl_certificate     /etc/letsencrypt/live/{{ certbot_certs[0].domains | first }}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/{{ certbot_certs[0].domains | first }}/privkey.pem;
+      ssl_session_cache shared:SSL:10m;
+      ssl_session_timeout 10m;
+      ssl_protocols TLSv1.2;
+      ssl_prefer_server_ciphers on;
+      ssl_ciphers "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384";
+  - listen: "443 ssl http2"
     server_name: "jonathonball.com"
-    server_name_redirect: "www.jonathonball.com"
     root: "/usr/share/nginx/html/jonathonball.com-master"
     index: "index.php"
     access_log: "/var/log/nginx/access.log"
@@ -51,7 +65,9 @@ nginx_vhosts:
     extra_parameters: "{{ php_nginx_location }}"
 
 app_github_user: jonathonball
+app_https: true
 
 firewall_allowed_tcp_ports:
     - "22"
     - "80"
+    - "443"
