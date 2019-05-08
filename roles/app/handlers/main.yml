@@ -11,3 +11,10 @@
   service:
     name: php-fpm
     state: restarted
+
+- name: Reload application cache
+  shell: '{{ app_php_path }} artisan config:cache'
+  args:
+    chdir: /usr/share/nginx/html/{{ item.name }}-master/src
+  with_items: "{{ laravel_sites }}"
+  tags: app

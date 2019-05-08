@@ -3,27 +3,27 @@
 
 - name: Calculate the installation root path for {{ app_github_repo }}
   set_fact:
-    installation_root: "{{ app_deploy_path }}/{{ app_github_repo }}-{{ app_github_tag }}"
+    installation_root: '{{ app_deploy_path }}/{{ app_github_repo }}-{{ app_github_tag }}'
   tags: app
 
 - name: Calculate {{ app_github_repo }} document root path
   set_fact:
-    document_root: "{{ installation_root }}/{{ app_document_root }}"
+    document_root: '{{ installation_root }}/{{ app_document_root }}'
   tags: app
 
 - name: Calculate {{ app_github_repo }} web root path
   set_fact:
-    web_root: "{{ document_root }}/{{ app_web_root }}"
+    web_root: '{{ document_root }}/{{ app_web_root }}'
   tags: app
 
 - name: Extract {{ app_github_repo }} package
   unarchive:
     src: https://github.com/{{ app_github_user }}/{{ app_github_repo }}/archive/{{ app_github_tag }}.zip
-    dest: "{{ app_deploy_path }}"
-    owner: "{{ app_file_owner }}"
-    group: "{{ app_group_owner }}"
+    dest: '{{ app_deploy_path }}'
+    owner: '{{ app_file_owner }}'
+    group: '{{ app_group_owner }}'
     remote_src: True
-    creates: "{{ installation_root }}"
+    creates: '{{ installation_root }}'
   notify: restart nginx
   tags: app
 

@@ -34,20 +34,23 @@ php_nginx_location: |
       include fastcgi_params;
   }
 
+laravel_sites:
+  - name: bbqlaser.com
+
 nginx_vhosts:
   - listen: 80
-    server_name: "bbqlaser.com"
+    server_name: bbqlaser.com
     return: "301 https://bbqlaser.com$request_uri"
-    filename: "bbqlaser.com.80.conf"
+    filename: bbqlaser.com.80.conf
   - listen: "443 ssl http2"
-    server_name: "bbqlaser.com"
-    root: "/usr/share/nginx/html/bbqlaser.com-master/src/public"
-    index: "index.php"
-    access_log: "/var/log/nginx/access.log"
-    error_log: "/var/log/nginx/bbqlaser.com.error.log"
-    state: "present"
+    server_name: bbqlaser.com
+    root: /usr/share/nginx/html/bbqlaser.com-master/src/public
+    index: index.php
+    access_log: /var/log/nginx/access.log
+    error_log: /var/log/nginx/bbqlaser.com.error.log
+    state: present
     template: "{{ nginx_vhost_template }}"
-    filename: "bbqlaser.com.conf"
+    filename: bbqlaser.com.conf
     extra_parameters: |
       {{ php_nginx_location }}
       ssl_certificate     /etc/letsencrypt/live/{{ certbot_certs[0].domains | first }}/fullchain.pem;
@@ -58,24 +61,25 @@ nginx_vhosts:
       ssl_prefer_server_ciphers on;
       ssl_ciphers "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384";
   - listen: 80
-    server_name: "jonathonball.com"
+    server_name: jonathonball.com
     return: "301 https://jonathonball.com$request_uri"
-    filename: "jonathonball.com.80.conf"
+    filename: jonathonball.com.80.conf
   - listen: "443 ssl http2"
-    server_name: "jonathonball.com"
-    root: "/usr/share/nginx/html/jonathonball.com-master"
-    index: "index.php"
-    access_log: "/var/log/nginx/access.log"
-    error_log: "/var/log/nginx/jonathonball.com.error.log"
-    state: "present"
+    server_name: jonathonball.com
+    root: /usr/share/nginx/html/jonathonball.com-master
+    index: index.php
+    access_log: /var/log/nginx/access.log
+    error_log: /var/log/nginx/jonathonball.com.error.log
+    state: present
     template: "{{ nginx_vhost_template }}"
-    filename: "jonathonball.com.conf"
-    extra_parameters: "{{ php_nginx_location }}"
+    filename: jonathonball.com.conf
+    extra_parameters: |
+      {{ php_nginx_location }}
 
 app_github_user: jonathonball
 app_https: true
 
 firewall_allowed_tcp_ports:
-    - "22"
-    - "80"
-    - "443"
+    - 22
+    - 80
+    - 443

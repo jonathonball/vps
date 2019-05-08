@@ -41,13 +41,5 @@
       line: '\1{{ "https" if app_https else "http" }}://{{ app_github_repo }}'
     - regex: '^(APP_DEBUG=).*$'
       line: '\1{{ "false" if app_env == "production" else "true" }}'
+  notify: Reload application cache
   tags: app
-
-- include_tasks: laravel-clear-cache.yml
-  tags: app
-
-# - name: Run {{ app_github_repo }} database migrations
-#   shell: '{{ app_php_path }} artisan config:cache'
-#   args:
-#     cddir: '{{ document_root }}'
-#   tags: app

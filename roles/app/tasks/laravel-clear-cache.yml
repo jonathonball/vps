@@ -1,8 +1,0 @@
----
-# Tasks to clear laravel application cache
-
-- name: Clear {{ app_github_repo }} Laravel application cache
-  shell: "{{ app_php_path }} artisan config:cache"
-  args:
-    chdir: "{{ document_root }}"
-  tags: app
