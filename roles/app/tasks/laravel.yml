@@ -1,38 +1,38 @@
 - name: Run composer for {{ app_github_repo }}
   composer:
     command: install
-    working_dir: "{{ document_root }}"
+    working_dir: '{{ document_root }}'
   tags: app
 
 - name: Check if env file for {{ app_github_repo }} exists
   stat:
-    path: "{{ document_root }}/.env"
+    path: '{{ document_root }}/.env'
   register: app_laravel_env
   tags: app
 
 - name: Copy blank .env file into place for {{ app_github_repo }}
   copy:
-    src: "{{ document_root }}/.env.example"
-    dest: "{{ document_root }}/.env"
-    owner: "{{ app_file_owner }}"
-    group: "{{ app_group_owner }}"
-    force: "{{ app_force_new_env }}"
+    src: '{{ document_root }}/.env.example'
+    dest: '{{ document_root }}/.env'
+    owner: '{{ app_file_owner }}'
+    group: '{{ app_group_owner }}'
+    force: '{{ app_force_new_env }}'
     remote_src: true
   when: not app_laravel_env.stat.exists
   tags: app
 
 - name: Generate {{ app_github_repo }} app key
-  shell: "{{ app_php_path }} artisan key:generate"
+  shell: '{{ app_php_path }} artisan key:generate'
   args:
-    chdir: "{{ document_root }}"
+    chdir: '{{ document_root }}'
   when: not app_laravel_env.stat.exists
   tags: app
 
 - name: Set items in .env for {{ app_github_repo }}
   lineinfile:
-    path: "{{ document_root }}/.env"
-    regex: "{{ item.regex }}"
-    line: "{{ item.line }}"
+    path: '{{ document_root }}/.env'
+    regex: '{{ item.regex }}'
+    line: '{{ item.line }}'
     backrefs: true
   with_items:
     - regex: '^(APP_NAME=).*$'
@@ -47,7 +47,7 @@
   tags: app
 
 # - name: Run {{ app_github_repo }} database migrations
-#   shell: "{{ app_php_path }} artisan config:cache"
+#   shell: '{{ app_php_path }} artisan config:cache'
 #   args:
-#     cddir: "{{ document_root }}"
+#     cddir: '{{ document_root }}'
 #   tags: app
