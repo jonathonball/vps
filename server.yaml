@@ -17,6 +17,8 @@
     - role: geerlingguy.certbot
     - role: geerlingguy.nginx
     - role: geerlingguy.php
+    - role: geerlingguy.mysql
+      become: true
     - role: geerlingguy.composer
     - role: app
       app_github_repo: bbqlaser.com

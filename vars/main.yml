@@ -63,6 +63,7 @@ php_packages:
   - php72u-opcache
   - php72u-pecl-apcu
   - php72u-json
+  - php72u-mysqlnd
 
 php_nginx_location: |
   location ~ \.php$ {
@@ -72,6 +73,17 @@ php_nginx_location: |
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
       include fastcgi_params;
   }
+
+mysql_root_password: "{{ lookup('password', playbook_dir + '/credentials/' + ansible_hostname + '-mysql-root.password chars=ascii_letters,digits,hexdigits,punctuation') }}"
+mysql_databases:
+  - name: bbqlaser
+    encoding: utf8mb4
+    collation: utf8mb4_general_ci
+mysql_users:
+  - name: lazer
+    host: "%"
+    password: "{{ lookup('password', playbook_dir + '/credentials/' + ansible_hostname + '-mysql-user.password chars=ascii_letters,digits,hexdigits,punctuation') }}"
+    priv: "bbqlaser.*:ALL"
 
 laravel_sites:
   - name: bbqlaser.com
