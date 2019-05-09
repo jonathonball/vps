@@ -23,7 +23,7 @@ $ pip install ansible
 ```
 7. Install playbooks from galaxy
 ```
-$ ansible-galaxy install geerlingguy.nginx geerlingguy.php
+$ ansible-galaxy install geerlingguy.{certbot,nginx,php,composer,firewall}
 ```
 8. Create an inventory file if needed
 9. Ensure ansible can reach your machine
