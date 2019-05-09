@@ -107,4 +107,5 @@ venv.bak/
 *.retry
 hosts
 .vault_pass
+credentials/
 
