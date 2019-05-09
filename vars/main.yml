@@ -6,37 +6,6 @@ certbot_certs:
     - jonathonball.com
 certbot_create_standalone_stop_services: []
 
-php_enable_php_fpm: true
-php_fpm_listen: 127.0.0.1:9000
-php_fpm_pool_user: nginx
-php_fpm_pool_group: adm
-php_use_managed_ini: true
-php_webserver_daemon: nginx
-php_packages:
-  - php72u-cli
-  - php72u-devel
-  - php72u-fpm
-  - php72u-gd
-  - php72u-mbstring
-  - php72u-pdo
-  - php72u-xml
-  - php72u-xmlrpc
-  - php72u-opcache
-  - php72u-pecl-apcu
-  - php72u-json
-
-php_nginx_location: |
-  location ~ \.php$ {
-      fastcgi_split_path_info ^(.+\.php)(/.+)$;
-      fastcgi_pass {{ php_fpm_listen }};
-      fastcgi_index index.php;
-      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      include fastcgi_params;
-  }
-
-laravel_sites:
-  - name: bbqlaser.com
-
 nginx_vhosts:
   - listen: 80
     server_name: bbqlaser.com
@@ -76,6 +45,36 @@ nginx_vhosts:
     extra_parameters: |
       {{ php_nginx_location }}
 
+php_enable_php_fpm: true
+php_fpm_listen: 127.0.0.1:9000
+php_fpm_pool_user: nginx
+php_fpm_pool_group: adm
+php_use_managed_ini: true
+php_webserver_daemon: nginx
+php_packages:
+  - php72u-cli
+  - php72u-devel
+  - php72u-fpm
+  - php72u-gd
+  - php72u-mbstring
+  - php72u-pdo
+  - php72u-xml
+  - php72u-xmlrpc
+  - php72u-opcache
+  - php72u-pecl-apcu
+  - php72u-json
+
+php_nginx_location: |
+  location ~ \.php$ {
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      fastcgi_pass {{ php_fpm_listen }};
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include fastcgi_params;
+  }
+
+laravel_sites:
+  - name: bbqlaser.com
 app_github_user: jonathonball
 app_https: true
 
