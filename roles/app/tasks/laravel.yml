@@ -39,7 +39,7 @@
   tags: app
 
 - name: Run migrations
-  shell: '{{ app_php_path }} artisan migrate --seed --quiet'
+  shell: '{{ app_php_path }} artisan migrate:fresh --seed --quiet'
   args:
     chdir: "{{ document_root }}"
   tags: app

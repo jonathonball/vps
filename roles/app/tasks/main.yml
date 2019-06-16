@@ -16,6 +16,13 @@
     web_root: '{{ document_root }}/{{ app_web_root }}'
   tags: app
 
+- name: Delete docroot for {{ app_github_repo }}
+  file:
+    path: "{{ installation_root }}"
+    state: absent
+  when: app_redeploy_all == true
+  tags: app
+
 - name: Extract {{ app_github_repo }} package
   unarchive:
     src: https://github.com/{{ app_github_user }}/{{ app_github_repo }}/archive/{{ app_github_tag }}.zip
