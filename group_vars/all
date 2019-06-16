@@ -64,6 +64,7 @@ php_packages:
   - php72u-pecl-apcu
   - php72u-json
   - php72u-mysqlnd
+  - php72u-pecl-yaml
 
 php_nginx_location: |
   location ~ \.php$ {
