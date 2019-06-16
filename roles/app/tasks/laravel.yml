@@ -46,7 +46,7 @@
     - regex: '^(DB_USERNAME=)homestead$'
       line: '\1{{ mysql_users[0].name }}'
     - regex: '^DB_PASSWORD=secret$'
-      line: 'DB_PASSWORD={{ lookup("password", playbook_dir + "/credentials/" + ansible_hostname + "-mysql-user.password chars=ascii_letters,digits,hexdigits,punctuation") }}'
+      line: "DB_PASSWORD={{ lookup('password', playbook_dir + '/credentials/' + ansible_hostname + '-mysql-root.password chars=ascii_letters,digits,hexdigits,punctuation') }}"
   notify: Reload application cache
   tags: app
 
