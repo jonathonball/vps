@@ -31,7 +31,7 @@
 - name: Set items in .env for {{ app_github_repo }}
   lineinfile:
     path: '{{ document_root }}/.env'
-    regex: '{{ item.regex }}'
+    regexp: '{{ item.regex }}'
     line: '{{ item.line }}'
     backrefs: true
     force: true
