@@ -34,20 +34,7 @@
     regexp: '{{ item.regex }}'
     line: '{{ item.line }}'
     backrefs: true
-    force: true
-  with_items:
-    - regex: '^(APP_NAME=).*$'
-      line: '\1{{ app_github_repo }}'
-    - regex: '^(APP_URL=).*$'
-      line: '\1{{ "https" if app_https else "http" }}://{{ app_github_repo }}'
-    - regex: '^(APP_DEBUG=).*$'
-      line: '\1{{ "false" if app_env == "production" else "true" }}'
-    - regex: '^(DB_DATABASE=)homestead$'
-      line: '\1{{ mysql_databases[0].name }}'
-    - regex: '^(DB_USERNAME=)homestead$'
-      line: '\1{{ mysql_users[0].name }}'
-    - regex: '^DB_PASSWORD=secret$'
-      line: "DB_PASSWORD={{ lookup('password', playbook_dir + '/credentials/' + ansible_hostname + '-mysql-user.password chars=ascii_letters,digits,hexdigits,punctuation') }}"
+  with_items: "{{ app_env_params }}"
   notify: Reload application cache
   tags: app
 
