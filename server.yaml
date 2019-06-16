@@ -1,7 +1,5 @@
 ---
 - hosts: all
-  vars_files:
-    - vars/main.yml
   pre_tasks:
     - name: Check to see if SSL certificate has been generated
       stat:
